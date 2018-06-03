@@ -5,7 +5,15 @@ fn main() {
     // test4();
     // test5();
     // test6();
-    test10();
+    // test10();
+
+    let mut rect = Rectangle {
+        width: 10,
+        length: 20,
+    };
+    rect.area();
+    rect.can_hold(&rect);
+    Rectangle::square(10).area(); // 关联方法(类方法)
 }
 
 fn test1 () {
@@ -136,4 +144,25 @@ fn test10() {
     println!("{:#?}", user1); // '#'format的意思
 }
 
+// method syntax
+// p1.distance(&p2); 等同于 (&p1).distance(&p2);
+#[derive(Debug)]
+struct Rectangle {
+    length: u32,
+    width: u32,
+}
 
+impl Rectangle {
+    fn area(&mut self) {
+        self.width *= 3;
+        println!("{}", self.length * self.width);
+    }
+
+    fn can_hold(&self, other: &Rectangle) {
+        println!("{}", self.length > other.length && self.width > other.width);
+    }
+
+    fn square(size: u32) -> Rectangle {
+        Rectangle { length: size, width: size }
+    }
+}
