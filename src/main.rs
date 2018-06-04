@@ -7,13 +7,21 @@ fn main() {
     // test6();
     // test10();
 
-    let mut rect = Rectangle {
-        width: 10,
-        length: 20,
-    };
-    rect.area();
-    rect.can_hold(&rect);
-    Rectangle::square(10).area(); // 关联方法(类方法)
+// struct
+    // let mut rect = Rectangle {
+    //     width: 10,
+    //     length: 20,
+    // };
+    // rect.area();
+    // rect.can_hold(&rect);
+    // Rectangle::square(10).area(); // 关联方法(类方法)
+
+// enum
+    // test11();
+    let m = IpAddrKind2::V4(127, 0, 0, 1);
+    let n = IpAddrKind2::V6(String::from("ddd"));
+    m.print_addr();
+    n.print_addr();
 }
 
 fn test1 () {
@@ -164,5 +172,47 @@ impl Rectangle {
 
     fn square(size: u32) -> Rectangle {
         Rectangle { length: size, width: size }
+    }
+}
+
+// enum and pattern match
+#[derive(Debug)]
+enum IpAddrKind {
+    V4,
+    V6,
+}
+#[derive(Debug)]
+enum IpAddrKind2 {
+    V4(u8, u8, u8, u8),  // ip由4个字节组成
+    V6(String), // 枚举对象的构造函数，很像结构体
+    // V8(struct),  //可以是任何数据结构，甚至可以是个enum
+}
+
+#[derive(Debug)]
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
+}
+
+fn test11() {
+    let home = IpAddr {
+        kind: IpAddrKind::V4,
+        address: String::from("127.0.0.1"),
+    };
+
+    let loopback = IpAddr {
+        kind: IpAddrKind::V6,
+        address: String::from("::1"),
+    };
+
+    let foo = IpAddrKind2::V4(127, 0, 0, 1);
+    let too = IpAddrKind2::V6(String::from("::1"));
+
+    println!("{:?}, {:?} , {:?} ,{:?}", home, loopback, foo, too);
+}
+
+impl IpAddrKind2 {
+    fn print_addr(&self) {
+        println!("{:?}", self);
     }
 }
