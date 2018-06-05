@@ -18,10 +18,13 @@ fn main() {
 
 // enum
     // test11();
-    let m = IpAddrKind2::V4(127, 0, 0, 1);
-    let n = IpAddrKind2::V6(String::from("ddd"));
-    m.print_addr();
-    n.print_addr();
+    // let m = IpAddrKind2::V4(127, 0, 0, 1);
+    // let n = IpAddrKind2::V6(String::from("ddd"));
+    // m.print_addr();
+    // n.print_addr();
+
+// if let
+    test12();
 }
 
 fn test1 () {
@@ -215,4 +218,35 @@ impl IpAddrKind2 {
     fn print_addr(&self) {
         println!("{:?}", self);
     }
+}
+
+// if let
+#[derive(Debug)]
+enum UsState {
+    Alabama,
+    Alaska,
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn test12() {
+    let coin = Coin::Quarter(UsState::Alaska);
+    let mut count = 0;
+    match &coin {
+        Coin::Quarter(state) => println!("State quarter from {:?}", state),
+        _ => count += 1,
+    }
+
+    if let Coin::Quarter(state) = Coin::Quarter(UsState::Alabama) {
+        println!("State quarter from {:?}", state);
+        count += 1;
+    } else {
+        count += 1;
+    }
+    println!("{}", count);
 }
